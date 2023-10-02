@@ -8,8 +8,71 @@
     <body>
     <img src="andrewgram-logo.png"
         height="100"
-        width="200"/>
+        width="100"/>
     <h1>Andrews Login App</h1>
+
+    <div id="user1">
+        <h2>User 1 Profile</h2>
+        <p>Name: <span id="user1-name"></span></p>
+        <p>Image: <img src="" id="user1-image" alt="User 1 Image"></p>
+        <p>Bio: <span id="user1-bio"></span></p>
+        <p>Color: <span id="user1-color"></span></p>
+        <p>Major: <span id="user1-major"></span></p>
+        <p>Email: <span id="user1-email"></span></p>
+    </div>
+    
+    <div id="user2">
+        <h2>User 2 Profile</h2>
+        <p>Name: <span id="user2-name"></span></p>
+        <p>Image: <img src="" id="user2-image" alt="User 2 Image"></p>
+        <p>Bio: <span id="user2-bio"></span></p>
+        <p>Color: <span id="user2-color"></span></p>
+        <p>Major: <span id="user2-major"></span></p>
+        <p>Email: <span id="user2-email"></span></p>
+    </div>    
+
     <iframe src="https://thunkable.site/w/8O8ZU8irafrCqpPgWgrMb" title="Andrews Profile App" height = 1000 width = 500></iframe>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+        <script>
+            var firebaseConfig = {
+                apiKey: "AIzaSyBAuz7J25EhSuLyGOmufOuFdao0-Un9rOg",
+                authDomain: "profileapp-ca041.firebaseapp.com",
+                databaseURL: "https://profileapp-ca041-default-rtdb.firebaseio.com",
+                projectId: "profileapp-ca041",
+                storageBucket: "profileapp-ca041.appspot.com",
+                messagingSenderId: "352391301734",
+                appId: "1:352391301734:web:d9a57ecbbf1f712eda7ba7"
+            };
+            firebase.initializeApp(firebaseConfig);
+
+            var database = firebase.database();
+
+            var userId1 = "GYdPjBuWrhWH7dqrxNOhNOmuy6x1";
+            var userId2 = "UUF5yOECsEXrf5RJhmrj3RwU3343";
+
+            var user1Ref = database.ref("users/" + userId1);
+            var user2Ref = database.ref("users/" + userId2);
+
+            user1Ref.once("value", function(snapshot) {
+                var user1Data = snapshot.val();
+                document.getElementById("user1-name").textContent = user1Data.name;
+                document.getElementById("user1-image").src = user1Data.image;
+                document.getElementById("user1-bio").textContent = user1Data.bio;
+                document.getElementById("user1-color").textContent = user1Data.color;
+                document.getElementById("user1-major").textContent = user1Data.major;
+            });
+
+            user2Ref.once("value", function(snapshot) {
+                var user2Data = snapshot.val();
+                document.getElementById("user2-name").textContent = user2Data.name;
+                document.getElementById("user2-image").src = user2Data.image;
+                document.getElementById("user2-bio").textContent = user2Data.bio;
+                document.getElementById("user2-color").textContent = user2Data.color;
+                document.getElementById("user2-major").textContent = user2Data.major;
+            });
+        </script>
     </body>
 </html>
