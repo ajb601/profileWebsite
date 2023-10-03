@@ -11,78 +11,92 @@
         width="100"/>
     <h1>Andrews Login App</h1>
 
-    <div id="user1">
-        <h2>User 1 Profile</h2>
-        <p>Name: <span id="user1-name"></span></p>
-        <p>Image: <img src="" id="user1-image" alt="User 1 Image"></p>
-        <p>Bio: <span id="user1-bio"></span></p>
-        <p>Color: <span id="user1-color"></span></p>
-        <p>Major: <span id="user1-major"></span></p>
-    </div>
+    <div id="user1"> 
     
-    <div id="user2">
-        <h2>User 2 Profile</h2>
-        <p>Name: <span id="user2-name"></span></p>
-        <p>Image: <img src="" id="user2-image" alt="User 2 Image"></p>
-        <p>Bio: <span id="user2-bio"></span></p>
-        <p>Color: <span id="user2-color"></span></p>
-        <p>Major: <span id="user2-major"></span></p>
-    </div>    
+        <h1 id="name1" type="text"> </h1> <br> 
+        <img id="image1" src="" alt=""> 
+        <h2 id="bio1" type="text"> </h2> <br> 
+        <h2 id="color1" type="text"> </h2> <br> 
+        <h3 id="major1" type="text"> </h3> <br> 
+
+    </div>
+
+    <div id="user2"> 
+        
+        <h1 id="name2" type="text"> </h1> <br> 
+        <img id="image2" src="" alt=""> 
+        <h2 id="bio2" type="text"> </h2> <br> 
+        <h2 id="color2" type="text"> </h2> <br> 
+        <h3 id="major2" type="text"> </h3> <br> 
+
+    </div>
 
     <iframe src="https://thunkable.site/w/8O8ZU8irafrCqpPgWgrMb" title="Andrews Profile App" height = 1000 width = 500></iframe>
 
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-        
     <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
-        
+      
         // Your web app's Firebase configuration
         // For Firebase JS SDK v7.20.0 and later, measurementId is optional
         const firebaseConfig = {
-            apiKey: "AIzaSyBAuz7J25EhSuLyGOmufOuFdao0-Un9rOg",
-            authDomain: "profileapp-ca041.firebaseapp.com",
-            databaseURL: "https://profileapp-ca041-default-rtdb.firebaseio.com",
-            projectId: "profileapp-ca041",
-            storageBucket: "profileapp-ca041.appspot.com",
-            messagingSenderId: "352391301734",
-            appId: "1:352391301734:web:d9a57ecbbf1f712eda7ba7",
-            measurementId: "G-JE82XPJPJR"
+          apiKey: "AIzaSyBAuz7J25EhSuLyGOmufOuFdao0-Un9rOg",
+          authDomain: "profileapp-ca041.firebaseapp.com",
+          databaseURL: "https://profileapp-ca041-default-rtdb.firebaseio.com",
+          projectId: "profileapp-ca041",
+          storageBucket: "profileapp-ca041.appspot.com",
+          messagingSenderId: "352391301734",
+          appId: "1:352391301734:web:d9a57ecbbf1f712eda7ba7",
+          measurementId: "G-JE82XPJPJR"
         };
-        
+      
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
 
-        var database = firebase.database();
+        import {getDatabase, get, ref, child}
+        from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js"
 
-        var userId1 = "GYdPjBuWrhWH7dqrxNOhNOmuy6x1";
-        var userId2 = "UUF5yOECsEXrf5RJhmrj3RwU3343";
+        const db = getDatabase()
 
-        var user1Ref = database.ref("users/" + userId1);
-        var user2Ref = database.ref("users/" + userId2);
+        var name1 = document.querySelector("#name1");
+        var name2 = document.querySelector("#name2");
+        var image1 = document.querySelector("#image1");
+        var image2 = document.querySelector("#image2");
+        var bio1 = document.querySelector("#bio1");
+        var bio2 = document.querySelector("#bio2");
+        var color1 = document.querySelector("#color1");
+        var color2 = document.querySelector("#color2")
+        var major1 = document.querySelector("#major1");
+        var major2 = document.querySelector("#major2");
 
-        user1Ref.once("value", function(snapshot) {
-            var user1Data = snapshot.val();
-            document.getElementById("user1-name").textContent = user1Data.name;
-            document.getElementById("user1-image").src = user1Data.image;
-            document.getElementById("user1-bio").textContent = user1Data.bio;
-            document.getElementById("user1-color").textContent = user1Data.color;
-            document.getElementById("user1-major").textContent = user1Data.major;
-        });
+        function findData(){
+            const dbref = ref(db);
+            get(child(dbref, GYdPjBuWrhWH7dqrxNOhNOmuy6x1))
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    name1.innerHTML = "Name: " + snapshot.val().name; 
+                    image1.src = snapshot.val().image; 
+                    bio1.innerHTML = "Bio: " + snapshot.val().bio; 
+                    color1.innerHTML = "Favorite Color: " + snapshot.val().color;
+                    major1.innerHTML = "Major: " + snapshot.val().major;
+                } else {"N/A"}
+            })
 
-        user2Ref.once("value", function(snapshot) {
-            var user2Data = snapshot.val();
-            document.getElementById("user2-name").textContent = user2Data.name;
-            document.getElementById("user2-image").src = user2Data.image;
-            document.getElementById("user2-bio").textContent = user2Data.bio;
-            document.getElementById("user2-color").textContent = user2Data.color;
-            document.getElementById("user2-major").textContent = user2Data.major;
-        });
-        </script>
+            get(child(dbref, UUF5yOECsEXrf5RJhmrj3RwU3343))
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    name2.innerHTML = "Name: " + snapshot.val().name; 
+                    image2.src = snapshot.val().image; 
+                    bio2.innerHTML = "Bio: " + snapshot.val().bio; 
+                    color2.innerHTML = "Favorite Color: " + snapshot.val().color;
+                    major2.innerHTML = "Major: " + snapshot.val().major;
+                } else {"N/A"}
+            })
+        }
+    </script>
     </body>
 </html>
