@@ -75,7 +75,7 @@
 
         function findData(){
             const dbref = ref(db);
-            get(child(dbref, GYdPjBuWrhWH7dqrxNOhNOmuy6x1))
+            get(child(dbref, "GYdPjBuWrhWH7dqrxNOhNOmuy6x1"))
             .then((snapshot)=>{
                 if(snapshot.exists()){
                     name1.innerHTML = "Name: " + snapshot.val().name; 
@@ -86,7 +86,7 @@
                 } else {"N/A"}
             })
 
-            get(child(dbref, UUF5yOECsEXrf5RJhmrj3RwU3343))
+            get(child(dbref, "UUF5yOECsEXrf5RJhmrj3RwU3343"))
             .then((snapshot)=>{
                 if(snapshot.exists()){
                     name2.innerHTML = "Name: " + snapshot.val().name; 
